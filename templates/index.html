@@ -12,14 +12,22 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Mobile Backdrop -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
         <!-- Sidebar: Documents & Settings -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="brand">
-                <i class="fa-solid fa-brain brand-icon"></i>
-                <div>
-                    <h2>Gemini RAG</h2>
-                    <span class="badge">ChromaDB + Gemini 2.5</span>
+                <div class="brand-left">
+                    <i class="fa-solid fa-brain brand-icon"></i>
+                    <div>
+                        <h2>Gemini RAG</h2>
+                        <span class="badge">ChromaDB + Gemini 3.5</span>
+                    </div>
                 </div>
+                <button id="closeSidebarBtn" class="icon-btn mobile-only close-sidebar-btn" title="Close Menu">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
             <!-- API Key Configuration -->
@@ -88,13 +96,19 @@
         <!-- Main Chat Pane -->
         <main class="chat-pane">
             <header class="chat-header">
-                <div class="header-info">
-                    <h1>Document Q&A Assistant</h1>
-                    <p>Ask precise questions grounded in your PDF documents with page citations.</p>
+                <div class="header-left">
+                    <button id="openSidebarBtn" class="mobile-toggle-btn mobile-only" title="Open Documents & Settings">
+                        <i class="fa-solid fa-bars"></i>
+                        <span class="mobile-doc-badge" id="mobileDocBadge">0</span>
+                    </button>
+                    <div class="header-info">
+                        <h1>Document Q&A Assistant</h1>
+                        <p class="desktop-only">Ask precise questions grounded in your PDF documents with page citations.</p>
+                    </div>
                 </div>
                 <div class="header-actions">
                     <button id="resetChatBtn" class="secondary-btn" title="Clear conversation memory">
-                        <i class="fa-solid fa-broom"></i> Reset Chat
+                        <i class="fa-solid fa-broom"></i> <span class="desktop-only">Reset Chat</span>
                     </button>
                 </div>
             </header>

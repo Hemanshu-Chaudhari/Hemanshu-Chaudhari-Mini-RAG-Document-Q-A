@@ -536,3 +536,199 @@ body {
 .send-btn:hover {
     background: var(--accent-hover);
 }
+
+/* ==========================================================================
+   Mobile Responsive Navigation & Touch Optimizations
+   ========================================================================== */
+
+.mobile-only {
+    display: none !important;
+}
+
+.desktop-only {
+    display: initial;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-toggle-btn {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+.mobile-toggle-btn:hover {
+    background: var(--border);
+}
+
+.mobile-doc-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--accent);
+    color: #0f172a;
+    font-size: 10px;
+    font-weight: 700;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-sidebar-btn {
+    font-size: 18px;
+    padding: 6px;
+    color: var(--text-secondary);
+}
+
+.close-sidebar-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Sidebar Backdrop for Mobile */
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(3px);
+    z-index: 998;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.sidebar-backdrop.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Screen <= 768px (Mobile & Tablets) */
+@media (max-width: 768px) {
+    .mobile-only {
+        display: flex !important;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    body {
+        height: 100dvh;
+    }
+
+    .app-container {
+        height: 100dvh;
+        width: 100%;
+        position: relative;
+    }
+
+    /* Sidebar converts into a smooth slide-out drawer */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 86vw;
+        max-width: 320px;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.6);
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .chat-pane {
+        width: 100%;
+        height: 100dvh;
+    }
+
+    .chat-header {
+        padding: 10px 14px;
+    }
+
+    .header-info h1 {
+        font-size: 15px;
+    }
+
+    .chat-messages {
+        padding: 14px 10px;
+        gap: 14px;
+    }
+
+    .message {
+        max-width: 94%;
+        gap: 8px;
+    }
+
+    .msg-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .msg-content {
+        padding: 10px 12px;
+        font-size: 13.5px;
+        line-height: 1.5;
+    }
+
+    .chat-input-container {
+        padding: 10px 12px;
+    }
+
+    .input-wrapper {
+        padding: 6px 10px;
+        border-radius: 10px;
+    }
+
+    /* Set font-size to 16px to prevent iOS Safari auto-zooming on focus */
+    #userInput {
+        font-size: 16px;
+    }
+
+    .send-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .citation-chip {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+

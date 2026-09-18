@@ -16,10 +16,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const keyStatusBadge = document.getElementById("keyStatusBadge");
     const apiKeyInput = document.getElementById("apiKeyInput");
     const saveKeyBtn = document.getElementById("saveKeyBtn");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const openSidebarBtn = document.getElementById("openSidebarBtn");
+    const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+    const mobileDocBadge = document.getElementById("mobileDocBadge");
+
+    // Mobile Drawer Handlers
+    function openDrawer() {
+        if (sidebar) sidebar.classList.add("open");
+        if (sidebarBackdrop) sidebarBackdrop.classList.add("active");
+    }
+
+    function closeDrawer() {
+        if (sidebar) sidebar.classList.remove("open");
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove("active");
+    }
+
+    if (openSidebarBtn) openSidebarBtn.addEventListener("click", openDrawer);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeDrawer);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener("click", closeDrawer);
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            closeDrawer();
+        }
+    });
 
     // Check API Key status and initial collection stats
     checkApiKeyConfig();
     loadStats();
+
 
     // Check API Key Status
     async function checkApiKeyConfig() {
@@ -169,6 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateStatsUI(stats) {
         if (!stats) return;
         totalChunksVal.textContent = stats.total_chunks || 0;
+        if (mobileDocBadge) {
+            mobileDocBadge.textContent = stats.documents ? stats.documents.length : 0;
+        }
         documentsList.innerHTML = "";
         if (stats.documents && stats.documents.length > 0) {
             stats.documents.forEach((doc) => {
