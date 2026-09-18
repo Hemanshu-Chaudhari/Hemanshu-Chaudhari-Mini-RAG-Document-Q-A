@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini PDF RAG | Advanced Document Intelligence</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar: Documents & Settings -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-brain brand-icon"></i>
+                <div>
+                    <h2>Gemini RAG</h2>
+                    <span class="badge">ChromaDB + Gemini 2.5</span>
+                </div>
+            </div>
+
+            <!-- API Key Configuration -->
+            <div class="section-card api-key-card">
+                <div class="section-header">
+                    <h3><i class="fa-solid fa-key"></i> Gemini API Key</h3>
+                    <span id="keyStatusBadge" class="status-badge badge-missing">Missing</span>
+                </div>
+                <div id="keyInputGroup" class="key-input-group">
+                    <input type="password" id="apiKeyInput" placeholder="AIzaSy..." autocomplete="off">
+                    <button id="saveKeyBtn" class="primary-btn" title="Save API Key"><i class="fa-solid fa-floppy-disk"></i></button>
+                </div>
+                <small class="hint-link">Get key from <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a></small>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="section-card upload-section">
+                <h3><i class="fa-solid fa-file-pdf"></i> Ingest Document</h3>
+                <div class="drop-zone" id="dropZone">
+                    <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                    <p>Drag & drop PDF here or <span>Browse</span></p>
+                    <input type="file" id="pdfFileInput" accept=".pdf" style="display: none;">
+                </div>
+                <div id="uploadProgress" class="progress-bar-container" style="display: none;">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <span id="uploadStatusText">Processing & chunking...</span>
+                </div>
+            </div>
+
+            <!-- Collection Info -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fa-solid fa-database"></i> Vector Database</h3>
+                    <button id="refreshStatsBtn" title="Refresh Stats" class="icon-btn"><i class="fa-solid fa-rotate"></i></button>
+                </div>
+                <div class="stat-row">
+                    <span>Total Chunks:</span>
+                    <strong id="totalChunksVal">0</strong>
+                </div>
+                <div class="documents-list-container">
+                    <label>Indexed Files:</label>
+                    <ul id="documentsList" class="doc-list">
+                        <li class="empty-hint">No documents indexed yet</li>
+                    </ul>
+                </div>
+                <button id="clearDbBtn" class="danger-btn"><i class="fa-solid fa-trash-can"></i> Clear Database</button>
+            </div>
+
+            <!-- Advanced Settings -->
+            <div class="section-card settings-section">
+                <h3><i class="fa-solid fa-sliders"></i> Advanced Pipeline</h3>
+                <label class="toggle-label">
+                    <input type="checkbox" id="toggleMemory" checked>
+                    <span>Conversational Memory</span>
+                </label>
+                <small class="hint">Rewrites follow-up questions into standalone search queries.</small>
+
+                <label class="toggle-label" style="margin-top: 12px;">
+                    <input type="checkbox" id="toggleReranker" checked>
+                    <span>Two-Stage LLM Reranker</span>
+                </label>
+                <small class="hint">Re-scores candidate chunks to filter out noise.</small>
+            </div>
+        </aside>
+
+        <!-- Main Chat Pane -->
+        <main class="chat-pane">
+            <header class="chat-header">
+                <div class="header-info">
+                    <h1>Document Q&A Assistant</h1>
+                    <p>Ask precise questions grounded in your PDF documents with page citations.</p>
+                </div>
+                <div class="header-actions">
+                    <button id="resetChatBtn" class="secondary-btn" title="Clear conversation memory">
+                        <i class="fa-solid fa-broom"></i> Reset Chat
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Message Feed -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="message system-welcome">
+                    <div class="msg-avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="msg-content">
+                        <h3>Welcome to your Gemini PDF RAG Assistant!</h3>
+                        <p>Follow the workflow:</p>
+                        <ol>
+                            <li>Upload a PDF file using the sidebar.</li>
+                            <li>Ask questions about sections, data, or concepts in the document.</li>
+                            <li>Ask follow-up questions naturally — conversational memory will resolve references!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="chat-input-container">
+                <form id="chatForm">
+                    <div class="input-wrapper">
+                        <textarea id="userInput" placeholder="Ask a question about your indexed documents... (Enter to send, Shift+Enter for newline)" rows="1"></textarea>
+                        <button type="submit" id="sendBtn" class="send-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
